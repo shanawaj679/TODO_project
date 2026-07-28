@@ -4,10 +4,28 @@ import { useState,useEffect } from "react"
 import axios from "axios"
 import {Link} from "react-router-dom"
 function Login(){
-  const [name,setname]=useState("")
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
-  const [confirmpassword,setconfirmpassword]=useState("")
+  const [message,setmessage]=useState("")
+
+const log_user = async ()=>{
+  try{
+      const response = await axios.post("http://localhost:3000/log_in",{
+    email,
+    password
+  },
+{
+  withCredentials:true
+})
+const data = response.data
+setmessage(data.message)
+  }
+  catch(err){
+       setmessage("something went wrong")
+  }
+
+}
+
 const fadeup={initial:{opacity:0,scale:0.95},
             whileInView:{opacity:1,scale:1},
             transition:{duration:0.6},
@@ -33,8 +51,9 @@ transition={{...fadeup.transition,duration:0.95}} className="log_label">Password
               <motion.div ><Link className="forgot_btn" to="/forgetpassword">🔒 Forget Password</Link></motion.div>
               <motion.div> <motion.button whileHover={{ scale: 1.03, y: -2 }}
                whileTap={{ scale: 0.97 }} 
-               className="login_btn">Login</motion.button> </motion.div>
-              <motion.div >  Don't have an account? <Link className="links" to="/register">Sign In</Link></motion.div>
+               className="login_btn" onClick={log_user}>Login</motion.button> </motion.div>
+              <motion.div >  Don't have an account? <Link className="links" to="/register" >Sign In</Link></motion.div>
+              <div className="log_out">{message}</div>
             
              </div>
           </main>
