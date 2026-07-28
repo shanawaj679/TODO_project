@@ -162,6 +162,10 @@ margin-left:1rem;
         0 0 0 4px rgba(58,169,255,.25),
         0 15px 35px rgba(58,169,255,.4);
 }
+.reg_output{
+    font-size:1rem;
+    font-weight:600;
+}
 @media (min-width:768px){
 .login_container{
     grid-template-columns: 0.8fr 1fr;

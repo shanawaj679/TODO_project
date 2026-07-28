@@ -8,6 +8,28 @@ function Register(){
   const [email,setemail]=useState("")
   const [password,setpassword]=useState("")
   const [confirmpassword,setconfirmpassword]=useState("")
+  const [message,setmessage]=useState("")
+
+const reg_user = async ()=>{
+  try{
+     const response = axios.post("http://localhost:3000/register",{
+    name,
+    email,
+    password,
+    confirmpassword
+  },
+{
+  withCredentials:true
+})
+const data = response.data;
+setmessage(data.message);
+  }
+  catch(err){
+    setmessage("something went wrong")
+  }
+ 
+}
+
 const fadeup={initial:{opacity:0,scale:0.95},
             whileInView:{opacity:1,scale:1},
             transition:{duration:0.6},
@@ -37,8 +59,9 @@ transition={{...fadeup.transition,duration:1.05}} className="reg_label">Confirm 
               <motion.div {...fadeup} transition={{...fadeup.transition,duration:1.1}}><input type="text" placeholder="password" value={confirmpassword} onChange={(e)=>{setconfirmpassword(e.target.value)}} className="reg_input"></input></motion.div>
                  <motion.div> <motion.button whileHover={{ scale: 1.03, y: -2 }}
                whileTap={{ scale: 0.97 }} 
-               className="register_btn">Register</motion.button> </motion.div>
+               className="register_btn" onClick={reg_user}>Register</motion.button> </motion.div>
               <motion.div >Have an account already? <Link className="links" to="/">Log In</Link></motion.div>
+              <motion.div className="reg_output">{message}</motion.div>
              </div>
           </main>
         </div>
